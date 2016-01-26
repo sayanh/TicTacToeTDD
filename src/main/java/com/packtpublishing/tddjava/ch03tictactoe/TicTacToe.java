@@ -2,6 +2,8 @@ package com.packtpublishing.tddjava.ch03tictactoe;
 
 
 public class TicTacToe {
+
+    private char lastPlayer = '\0';
     private Character[][] board = { { '\0', '\0', '\0' },
             { '\0', '\0', '\0' },
             { '\0', '\0', '\0' } };
@@ -12,6 +14,8 @@ public class TicTacToe {
         checkYAxis(y);
 
         setBox(x, y);
+
+        lastPlayer = nextPlayer();
 
     }
 
@@ -33,5 +37,12 @@ public class TicTacToe {
         } else {
             board[x - 1][y - 1] = 'X';
         }
+    }
+
+    public char nextPlayer() {
+        if (lastPlayer == 'X') {
+            return 'O';
+        }
+        return 'X';
     }
 }
