@@ -17,39 +17,44 @@ public class TicTacToe {
 
         setBox(x, y, lastPlayer);
 
-        for ( int index = 0; index < 3; index++ ) {
-            if ( isWin() ) {
-                return lastPlayer + " is the winner";
-            }
+        if ( isWin(x, y) ) {
+            return lastPlayer + " is the winner";
+        } else if ( isDraw() ) {
+            return "The result is draw";
         }
         return "No winner";
 
     }
 
-    private boolean isWin() {
-        for ( int index = 0; index < 3; index++ ) {
-            if ( board[0][index] == lastPlayer && board[1][index] == lastPlayer && board[2][index] == lastPlayer ) {
-                return true;
-            }
+    private boolean isWin(int x, int y) {
+
+        char vertical, horizontal, diagonal1, diagonal2;
+        vertical = horizontal = diagonal1 = diagonal2 = '\0';
+        int playerTotal = 3 * lastPlayer;
+        for ( int i = 0; i < 3; i++ ) {
+            vertical += board[x - 1][i];
+            horizontal += board[i][y - 1];
+            diagonal1 += board[i][i];
+            diagonal2 += board[3 - i - 1][i];
         }
 
-        for ( int index = 0; index < 3; index++ ) {
-            if ( board[index][0] == lastPlayer && board[index][1] == lastPlayer && board[index][2] == lastPlayer ) {
-                return true;
-            }
-        }
-
-        // Left diagonal
-        if ( board[0][0] == lastPlayer && board[1][1] == lastPlayer && board[2][2] == lastPlayer ) {
-            return true;
-        }
-
-        // Right diagonal
-        if ( board[2][0] == lastPlayer && board[1][1] == lastPlayer && board[0][2] == lastPlayer ) {
+        if ( vertical == playerTotal || horizontal == playerTotal || diagonal1 == playerTotal || diagonal2 == playerTotal ) {
             return true;
         }
 
         return false;
+    }
+
+    private boolean isDraw() {
+        for ( int i = 0; i < board.length; i++ ) {
+            for ( int j = 0; j < board.length; j++ ) {
+                if ( board[i][j] == '\0' ) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public void checkXAxis(int x) {
